@@ -7,6 +7,7 @@ import fragment from '../shaders/fragmentShader.glsl'
 import track from '../music/siri.mp3'
 
 const SCALE_ON_HOVER = 1.1;
+const messageElement = document.querySelector('.footer-message');
 
 export default class App {
     constructor(options) {
@@ -68,7 +69,6 @@ export default class App {
     }
 
 
-
     setupEventListeners() {
         this.setupResize();
         this.setUpMouseMovement();
@@ -115,6 +115,7 @@ export default class App {
         window.addEventListener("click", (event) => {
             if (this.intersects.length > 0) {
                 this.audioVisualizer.sound.isPlaying ? this.audioVisualizer.sound.pause() : this.audioVisualizer.sound.play();
+                this.changeMessage();
             }
         })
     }
@@ -129,6 +130,11 @@ export default class App {
 
     removeCursor() {
         document.body.classList.remove("cursor-pointer")
+    }
+
+    changeMessage() {
+        let message = `click on s!r! to ${this.audioVisualizer.sound.isPlaying ? 'stop' : 'play'}`
+        messageElement.querySelector('p').innerText = message;
     }
 
     resize() {
