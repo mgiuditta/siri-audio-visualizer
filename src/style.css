@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'thasup';
+    src: url('/fonts/JuxtaSansMono-Bold.woff2') format('woff2')
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow: hidden;
+    background-color: #49145A;
+    outline-style: hidden;
+
+}
+
+body {
+    font-family: 'thasup', sans-serif;
+    color: #F8EBF2;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    height: 50px;
+    background-color: #2b0d36;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #2b0d36;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+.icon {
+    height: 30px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+canvas {
+    display: block
+}
+
+#container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+.container-iframe {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
