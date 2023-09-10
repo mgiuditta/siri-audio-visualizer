@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import  gsap from "gsap"
 
+const messageElement = document.querySelector('.footer-message');
+
+
 export default class AudioVisualizer {
     constructor(mesh, frequencyUniformName) {
 
@@ -15,6 +18,8 @@ export default class AudioVisualizer {
         this.loader = new THREE.AudioLoader();
         this.analyser = new THREE.AudioAnalyser(this.sound, 32);
 
+        this.loaded = false;
+
     }
 
     load(path) {
@@ -23,6 +28,8 @@ export default class AudioVisualizer {
             this.sound.setLoop(true)
             this.sound.setVolume(0.5)
             this.sound.hasPlaybackControl = true;
+            this.loaded = true;
+            this.showMessage();
         })
     }
 
@@ -38,5 +45,9 @@ export default class AudioVisualizer {
             ease: "Slow.easeOut",
             value: freq
         })
+    }
+
+    showMessage(){
+        messageElement.classList.remove("hide");
     }
 }

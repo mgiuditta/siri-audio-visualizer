@@ -49,6 +49,10 @@ footer{
     font-size: 24px;
 }
 
+.hide{
+    display: none !important;
+}
+
 .footer-container {
     background-color: #2b0d36;
     display: flex;

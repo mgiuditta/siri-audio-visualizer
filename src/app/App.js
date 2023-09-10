@@ -114,11 +114,16 @@ export default class App {
     setupClick() {
         window.addEventListener("click", (event) => {
             if (this.intersects.length > 0) {
-                this.audioVisualizer.sound.isPlaying ? this.audioVisualizer.sound.pause() : this.audioVisualizer.sound.play();
-                this.changeMessage();
+                if (this.audioVisualizer.loaded) {
+                    this.audioVisualizer.sound.isPlaying
+                        ? this.audioVisualizer.sound.pause()
+                        : this.audioVisualizer.sound.play();
+                    this.changeMessage();
+                }
             }
-        })
+        });
     }
+
 
     setupResize() {
         window.addEventListener("resize", this.resize.bind(this));
