@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import gsap from "gsap";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 import AudioVisualizer from "./AudioVisualizer.js";
 
 import vertex from '../shaders/vertexShader.glsl'
@@ -32,7 +33,7 @@ export default class App {
         );
 
         this.camera.position.set(0, 0, 2);
-
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement)
         this.time = 0;
         this.isPlaying = true;
 
@@ -46,33 +47,60 @@ export default class App {
     }
 
     addObjects() {
-        this.material = new THREE.ShaderMaterial({
+        // this.material = new THREE.ShaderMaterial({
+        //     extensions: {
+        //         derivatives: "#extension GL_OES_standard_derivatives : enable"
+        //     },
+        //     side: THREE.DoubleSide,
+        //     uniforms: {
+        //         uTime: {value: 0},
+        //         uColor: { value: new THREE.Color(0x00ff00) },
+        //         uOpacity: { value: 0.5 },
+        //     },
+        //     vertexShader: vertex,
+        //     fragmentShader: fragment
+        // });
+
+        // this.material = new THREE.MeshPhysicalMaterial({
+        //     roughness: 0,
+        //     transmission: 1,
+        //     thickness: 0.2,
+        // });
+        //
+        // this.geometry = new THREE.SphereGeometry(0.5, 100, 100);
+        // this.sphere = new THREE.Mesh(this.geometry, this.material);
+
+        // siri waves
+        this.createWaves();
+
+        // this.scene.add(this.sphere);
+    }
+
+    createWaves() {
+        this.waveMaterial = new THREE.ShaderMaterial({
             extensions: {
                 derivatives: "#extension GL_OES_standard_derivatives : enable"
             },
             side: THREE.DoubleSide,
             uniforms: {
-                uTime: {value: 0}
+                uTime: {value: 0},
+                uColor: {value: new THREE.Color(0x00ff00)}
             },
             vertexShader: vertex,
             fragmentShader: fragment
         });
 
-        this.geometry = new THREE.SphereGeometry(0.3, 100, 100);
-        this.sphere = new THREE.Mesh(this.geometry, this.material);
-
-        // audio visualizer
-        this.audioVisualizer = new AudioVisualizer(this.sphere, 'uAudioFrequency');
-        this.audioVisualizer.load(track)
-
-        this.scene.add(this.sphere);
+        this.waveGeometry = new THREE.PlaneGeometry(0.5, 0.5, 64, 64)
+        this.wave = new THREE.Mesh(this.waveGeometry, this.waveMaterial);
+        this.wave.rotation.x = - Math.PI * 0.5
+        this.scene.add(this.wave);
     }
 
 
     setupEventListeners() {
         this.setupResize();
-        this.setUpMouseMovement();
-        this.setupClick();
+        // this.setUpMouseMovement();
+        // this.setupClick();
     }
 
 
@@ -153,10 +181,10 @@ export default class App {
     render() {
         if (!this.isPlaying) return;
         this.time += 0.05;
-        this.material.uniforms.uTime.value = this.time / 10
+        this.waveMaterial.uniforms.uTime.value = this.time / 10;
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
-        this.audioVisualizer.update()
+        // this.audioVisualizer.update()
     }
 
 }
